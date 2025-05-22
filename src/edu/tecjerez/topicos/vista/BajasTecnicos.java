@@ -1,4 +1,4 @@
 package edu.tecjerez.topicos.vista;
 
-public class Altas {
+public class BajasTecnicos {
 }

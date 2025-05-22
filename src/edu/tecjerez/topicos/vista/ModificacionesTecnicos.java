@@ -1,4 +1,4 @@
 package edu.tecjerez.topicos.vista;
 
-public class Consultas {
+public class ModificacionesTecnicos {
 }
