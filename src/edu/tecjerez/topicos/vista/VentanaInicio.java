@@ -31,7 +31,8 @@ public class VentanaInicio extends JFrame implements ActionListener {
         setVisible(true);
 
         JMenuBar menuBar = new JMenuBar();
-
+        menuBar.setBackground(new Color(7, 41, 50));
+        menuBar.setOpaque(true);
 
 //----------------------- MENU AVIONES-------------------–––––––---––––––––--------
         menuAviones = new JMenu("Aviones");
@@ -111,18 +112,24 @@ public class VentanaInicio extends JFrame implements ActionListener {
 
             menuBar.add(menuEmpleados);
 
+
         setJMenuBar(menuBar);
 
 //----------- final menu empleados-----------------
 
-        toolbar = new JToolBar();
-            ImageIcon logoIcono = new ImageIcon("./imagenes/toolbarLogo.png");
-            JLabel logoLabel = new JLabel(logoIcono);
-            logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            toolbar.add(logoLabel);
+        toolbar = new JToolBar(JToolBar.VERTICAL);
+
+            JLabel logo= new JLabel();
+            logo.setHorizontalAlignment(SwingConstants.CENTER);
+            logo.setIcon(new ImageIcon("./imagenes/logo.png"));
+            logo.setPreferredSize(new Dimension(150, 150));
+            logo.setAlignmentX(Component.CENTER_ALIGNMENT);
+            toolbar.setBackground(new Color(7, 41, 50));
+            toolbar.add(logo, BorderLayout.WEST);
 
             //btn para salir --------------
             btnToolbarSalir = new JButton();
+            btnToolbarSalir.setBackground(new Color(7, 41, 50));
             btnToolbarSalir.setIcon(new ImageIcon("./imagenes/toolbarSalir.png"));
             toolbar.add(btnToolbarSalir);
             btnToolbarSalir.addActionListener(this);
@@ -132,7 +139,7 @@ public class VentanaInicio extends JFrame implements ActionListener {
             btnToolbarLogin = new JButton();
             btnToolbarLogin.setIcon(new ImageIcon("./imagenes/toolbarLogin.png"));
 
-            add(toolbar, BorderLayout.PAGE_START);
+            add(toolbar, BorderLayout.WEST);
             toolbar.setVisible(true);
     }
 
