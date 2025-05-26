@@ -19,7 +19,7 @@ public class VentanaInicio extends JFrame implements ActionListener {
 
     JToolBar toolbar;
 
-    JButton btnToolbarSalir, btnToolbarLogin;
+    JButton btnToolbarSalir, btnConsulta, btnAgregar, btnModificar, btnBorrar;
 
     public VentanaInicio(){
         setLayout(new BorderLayout());
@@ -64,7 +64,8 @@ public class VentanaInicio extends JFrame implements ActionListener {
 
         menuBar.add(menuAviones);
 
-        //------------- final menu aviones -----------
+
+
 
 //----------------------- MENU EMPLEADOS ----------------------------
             menuEmpleados = new JMenu("Empleados");
@@ -115,7 +116,7 @@ public class VentanaInicio extends JFrame implements ActionListener {
 
         setJMenuBar(menuBar);
 
-//----------- final menu empleados-----------------
+        // toolbar -----------------
 
         toolbar = new JToolBar(JToolBar.VERTICAL);
 
@@ -125,20 +126,101 @@ public class VentanaInicio extends JFrame implements ActionListener {
             logo.setPreferredSize(new Dimension(150, 150));
             logo.setAlignmentX(Component.CENTER_ALIGNMENT);
             toolbar.setBackground(new Color(7, 41, 50));
-            toolbar.add(logo, BorderLayout.WEST);
+            toolbar.add(logo);
+
+            //btn consulta (jframe predeterminado) -------------
+            ImageIcon iconoConsulta = new ImageIcon("./imagenes/consultas.png");
+            Image imagenConsulta = iconoConsulta.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+            ImageIcon iconoConsultaEscalado = new ImageIcon(imagenConsulta);
+
+            btnConsulta = new JButton(iconoConsultaEscalado);
+            btnConsulta.setBackground(new Color(7, 41, 50));
+            btnConsulta.setToolTipText("Consultar");
+            btnConsulta.setBorderPainted(false);
+            btnConsulta.setFocusPainted(false);
+            btnConsulta.setContentAreaFilled(true);
+            btnConsulta.setPreferredSize(new Dimension(64, 64));
+            btnConsulta.setAlignmentX(Component.CENTER_ALIGNMENT);
+            btnConsulta.addActionListener(this);
+
+
+            //btn agregar-----------
+        ImageIcon iconoAgregar = new ImageIcon("./imagenes/agregar.png");
+        Image imagenAgregar = iconoAgregar.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon iconoAgregarEscalado = new ImageIcon(imagenAgregar);
+
+        btnAgregar = new JButton(iconoAgregarEscalado);
+        btnAgregar.setBackground(new Color(7, 41, 50));
+        btnAgregar.setToolTipText("Agregar");
+        btnAgregar.setBorderPainted(false);
+        btnAgregar.setFocusPainted(false);
+        btnAgregar.setContentAreaFilled(true);
+        btnAgregar.setPreferredSize(new Dimension(64, 64));
+        btnAgregar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnAgregar.addActionListener(this);
+
+
+        // btn borrar ----------------
+        ImageIcon iconoBorrar = new ImageIcon("./imagenes/eliminar.png");
+        Image imagenBorrar = iconoBorrar.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon iconoBorrarEscalado = new ImageIcon(imagenBorrar);
+
+        btnBorrar = new JButton(iconoBorrarEscalado);
+        btnBorrar.setBackground(new Color(7, 41, 50));
+        btnBorrar.setToolTipText("Eliminar");
+        btnBorrar.setBorderPainted(false);
+        btnBorrar.setFocusPainted(false);
+        btnBorrar.setContentAreaFilled(true);
+        btnBorrar.setPreferredSize(new Dimension(64, 64));
+        btnBorrar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnBorrar.addActionListener(this);
+
+
+        //btn modificaciones ----------
+        ImageIcon iconoModificar = new ImageIcon("./imagenes/modificar.png");
+        Image imagenModificar = iconoModificar.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon iconoModificarEscalado = new ImageIcon(imagenModificar);
+
+        btnModificar = new JButton(iconoModificarEscalado);
+        btnModificar.setBackground(new Color(7, 41, 50));
+        btnModificar.setToolTipText("modificar");
+        btnModificar.setBorderPainted(false);
+        btnModificar.setFocusPainted(false);
+        btnModificar.setContentAreaFilled(true);
+        btnModificar.setPreferredSize(new Dimension(64, 64));
+        btnModificar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnModificar.addActionListener(this);
+
 
             //btn para salir --------------
-            btnToolbarSalir = new JButton();
+            ImageIcon iconoSalir = new ImageIcon("./imagenes/salir.png");
+            Image imagenSalir = iconoSalir.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+            ImageIcon iconoEscalado = new ImageIcon(imagenSalir);
+
+            btnToolbarSalir = new JButton(iconoEscalado);
             btnToolbarSalir.setBackground(new Color(7, 41, 50));
-            btnToolbarSalir.setIcon(new ImageIcon("./imagenes/toolbarSalir.png"));
-            toolbar.add(btnToolbarSalir);
-            btnToolbarSalir.addActionListener(this);
             btnToolbarSalir.setToolTipText("Salir del programa.");
+            btnToolbarSalir.setBorderPainted(false);
+            btnToolbarSalir.setFocusPainted(false);
+            btnToolbarSalir.setContentAreaFilled(true);
+            btnToolbarSalir.setPreferredSize(new Dimension(64, 64));
+            btnToolbarSalir.setAlignmentX(Component.CENTER_ALIGNMENT);
+            btnToolbarSalir.addActionListener(this);
 
-            //btn para regresar al login ---------
-            btnToolbarLogin = new JButton();
-            btnToolbarLogin.setIcon(new ImageIcon("./imagenes/toolbarLogin.png"));
+            toolbar.add(btnConsulta);
+            toolbar.add(Box.createVerticalStrut(30));
+            toolbar.add(btnAgregar);
+            toolbar.add(Box.createVerticalStrut(30));
+            toolbar.add(btnBorrar);
+            toolbar.add(Box.createVerticalStrut(30));
+            toolbar.add(btnModificar);
+            toolbar.add(Box.createVerticalStrut(30));
+            toolbar.add(btnToolbarSalir);
 
+
+            toolbar.setFloatable(false);
+            toolbar.setLayout(new BoxLayout(toolbar, BoxLayout.Y_AXIS));
+            toolbar.add(Box.createVerticalGlue());
             add(toolbar, BorderLayout.WEST);
             toolbar.setVisible(true);
     }
