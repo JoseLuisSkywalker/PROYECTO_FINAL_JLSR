@@ -146,6 +146,13 @@ public class AltasAviones implements ActionListener {
 
         btnAgregar = new JButton("Agregar");
 
+
+
+
+        //lista de action listeners ---------
+        checkExamen1.addActionListener(this);
+        checkExamen2.addActionListener(this); 
+
         ventanaAltas.add(panelCajas, BorderLayout.CENTER);
         ventanaAltas.pack();
     }
