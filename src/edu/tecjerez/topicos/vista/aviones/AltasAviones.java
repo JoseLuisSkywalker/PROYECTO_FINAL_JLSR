@@ -1,12 +1,21 @@
 package edu.tecjerez.topicos.vista.aviones;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class AltasAviones {
+public class AltasAviones implements ActionListener {
     public static AltasAviones instancia;
     JInternalFrame ventanaAltas;
     JDesktopPane desktopPaneAltas;
+    JPanel panelCajas;
+    JTextField cajaRegistro, cajaModelo, cajaPeso, campoNSS1, campoNSS2,campoNombreTec1, campoNombreTec2;
+    JComboBox dia1, mes1, año1, dia2, mes2, año2;
+    JSpinner spinnerCal1, spinnerCal2, tiempo1, tiempo2;
+    JButton btnAgregar, btnCancelar, btnRestablecer;
+    JCheckBox checkExamen1, checkExamen2;
 
 
     public AltasAviones(){
@@ -19,125 +28,125 @@ public class AltasAviones {
         ventanaAltas.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         ventanaAltas.getContentPane().setLayout(new GridLayout());
 
-        JPanel panelCampos = new JPanel(new GridLayout(15, 2, 5, 5));
-        panelCampos.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        panelCampos.setBackground(new Color(181, 213, 183));
+        GridLayout layout = new GridLayout(17, 2, 5, 5);
+        panelCajas = new JPanel();
+        panelCajas.setLayout(layout);
+        EmptyBorder borde = new EmptyBorder(10, 10, 10, 10);
+        panelCajas.setBorder(borde);
+        Color colorFondo = new Color(181, 213, 183);
+        panelCajas.setBackground(colorFondo);
 
-        // 1. Número de registro
-        panelCampos.add(new JLabel("Número de registro:"));
-        JTextField campoRegistro = new JTextField();
-        panelCampos.add(campoRegistro);
+        panelCajas.add(new JLabel("Número de registro:"));
+        cajaRegistro = new JTextField();
+        panelCajas.add(cajaRegistro);
 
-        // 2. Modelo de avión
-        panelCampos.add(new JLabel("Modelo de avión:"));
-        JTextField campoModelo = new JTextField();
-        panelCampos.add(campoModelo);
+        panelCajas.add(new JLabel("Modelo de avión:"));
+        cajaModelo = new JTextField();
+        panelCajas.add(cajaModelo);
 
-        // 3. Capacidad de peso
-        panelCampos.add(new JLabel("Capacidad de peso en kilogramos:"));
-        JTextField campoPeso = new JTextField();
-        panelCampos.add(campoPeso);
+        panelCajas.add(new JLabel("Capacidad de peso en kilogramos:"));
+        cajaPeso = new JTextField();
+        panelCajas.add(cajaPeso);
 
-        // 4. Examen 1 - Velocidad
-        JCheckBox checkExamen1 = new JCheckBox("Examen 1: Velocidad (especificar calificación en el campo)");
-        panelCampos.add(checkExamen1);
+        checkExamen1 = new JCheckBox("Examen 1: Velocidad (especificar calificación en el campo):");
+        panelCajas.add(checkExamen1);
 
-        // 5. Calificación 1
         SpinnerNumberModel modeloCal1 = new SpinnerNumberModel(0, 0, 100, 1);
-        JSpinner spinnerCal1 = new JSpinner(modeloCal1);
+        spinnerCal1 = new JSpinner(modeloCal1);
         spinnerCal1.setEnabled(false);
-        panelCampos.add(spinnerCal1);
+        panelCajas.add(spinnerCal1);
 
-        // 6. Examen 2 - Altitud Máxima
-        JCheckBox checkExamen2 = new JCheckBox("Examen 2: Altitud Máxima (especificar calificación en el campo");
-        panelCampos.add(checkExamen2);
+        checkExamen2 = new JCheckBox("Examen 2: Altitud Máxima (especificar calificación en el campo):");
+        panelCajas.add(checkExamen2);
 
-        // 7. Calificación 2
         SpinnerNumberModel modeloCal2 = new SpinnerNumberModel(0, 0, 100, 1);
-        JSpinner spinnerCal2 = new JSpinner(modeloCal2);
+        spinnerCal2 = new JSpinner(modeloCal2);
         spinnerCal2.setEnabled(false);
-        panelCampos.add(spinnerCal2);
+        panelCajas.add(spinnerCal2);
 
-        // 8. SSN técnico Examen 1
-        panelCampos.add(new JLabel("NSS técnico Examen 1:"));
-        JTextField campoSSN1 = new JTextField();
-        campoSSN1.setEnabled(false);
-        panelCampos.add(campoSSN1);
+        panelCajas.add(new JLabel("NSS técnico Examen 1:"));
+        campoNSS1 = new JTextField();
+        campoNSS1.setEnabled(false);
+        panelCajas.add(campoNSS1);
 
-        // 9. Nombre técnico Examen 1
-        panelCampos.add(new JLabel("Nombre técnico Examen 1:"));
-        JTextField campoNombreTec1 = new JTextField();
+        panelCajas.add(new JLabel("Nombre técnico Examen 1:"));
+        campoNombreTec1 = new JTextField();
         campoNombreTec1.setEnabled(false);
-        panelCampos.add(campoNombreTec1);
+        panelCajas.add(campoNombreTec1);
 
-        // 10. SSN técnico Examen 2
-        panelCampos.add(new JLabel("NSS técnico Examen 2:"));
-        JTextField campoSSN2 = new JTextField();
-        campoSSN2.setEnabled(false);
-        panelCampos.add(campoSSN2);
+        panelCajas.add(new JLabel("NSS técnico Examen 2:"));
+        campoNSS2 = new JTextField();
+        campoNSS2.setEnabled(false);
+        panelCajas.add(campoNSS2);
 
-        // 11. Nombre técnico Examen 2
-        panelCampos.add(new JLabel("Nombre técnico Examen 2:"));
-        JTextField campoNombreTec2 = new JTextField();
+        panelCajas.add(new JLabel("Nombre técnico Examen 2:"));
+        campoNombreTec2 = new JTextField();
         campoNombreTec2.setEnabled(false);
-        panelCampos.add(campoNombreTec2);
+        panelCajas.add(campoNombreTec2);
 
-        // 12. Fecha examen 1
-        panelCampos.add(new JLabel("Fecha Examen 1:"));
+
+        panelCajas.add(new JLabel("Fecha Examen 1:"));
         JPanel panelFecha1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JSpinner dia1 = new JSpinner(new SpinnerNumberModel(1, 1, 31, 1));
-        JSpinner mes1 = new JSpinner(new SpinnerNumberModel(1, 1, 12, 1));
-        JSpinner año1 = new JSpinner(new SpinnerNumberModel(2024, 1900, 2100, 1));
-        dia1.setEnabled(false); mes1.setEnabled(false); año1.setEnabled(false);
-        panelFecha1.add(dia1); panelFecha1.add(mes1); panelFecha1.add(año1);
-        panelCampos.add(panelFecha1);
+        dia1 = new JComboBox();
+        for(int i = 1; i < 32; i++){
+            dia1.addItem(i);
+        }
+        mes1 = new JComboBox();
+        for(int i = 1; i < 13; i++){
+            mes1.addItem(i);
+        }
+        año1 = new JComboBox();
+        for(int i = 1900; i < 2101; i++){
+            año1.addItem(i);
+        }
+        dia1.setEnabled(false);
+        mes1.setEnabled(false);
+        año1.setEnabled(false);
 
-        // 13. Fecha examen 2
-        panelCampos.add(new JLabel("Fecha Examen 2:"));
+        panelFecha1.add(dia1);
+        panelFecha1.add(mes1);
+        panelFecha1.add(año1);
+        panelCajas.add(panelFecha1);
+
+        panelCajas.add(new JLabel("Fecha Examen 2:"));
         JPanel panelFecha2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JSpinner dia2 = new JSpinner(new SpinnerNumberModel(1, 1, 31, 1));
-        JSpinner mes2 = new JSpinner(new SpinnerNumberModel(1, 1, 12, 1));
-        JSpinner año2 = new JSpinner(new SpinnerNumberModel(2024, 1900, 2100, 1));
-        dia2.setEnabled(false); mes2.setEnabled(false); año2.setEnabled(false);
-        panelFecha2.add(dia2); panelFecha2.add(mes2); panelFecha2.add(año2);
-        panelCampos.add(panelFecha2);
+        dia2 = new JComboBox();
+        for(int i = 1; i < 32; i++){
+            dia2.addItem(i);
+        }
+        mes2 = new JComboBox();
+        for(int i = 1; i < 13; i++){
+            mes2.addItem(i);
+        }
+        año2 = new JComboBox();
+        for(int i = 1900; i < 2101; i++){
+            año2.addItem(i);
+        }
 
-        // 14. Tiempo en aire examen 1
-        panelCampos.add(new JLabel("Tiempo en aire examen 1 (min):"));
-        JSpinner tiempo1 = new JSpinner(new SpinnerNumberModel(0, 0, 999, 1));
+        dia2.setEnabled(false);
+        mes2.setEnabled(false);
+        año2.setEnabled(false);
+
+        panelFecha2.add(dia2);
+        panelFecha2.add(mes2);
+        panelFecha2.add(año2);
+        panelCajas.add(panelFecha2);
+
+
+        panelCajas.add(new JLabel("Tiempo en aire examen 1 (min):"));
+        tiempo1 = new JSpinner(new SpinnerNumberModel(0, 0, 999, 1));
         tiempo1.setEnabled(false);
-        panelCampos.add(tiempo1);
+        panelCajas.add(tiempo1);
 
-        // 15. Tiempo en aire examen 2
-        panelCampos.add(new JLabel("Tiempo en aire examen 2 (min):"));
-        JSpinner tiempo2 = new JSpinner(new SpinnerNumberModel(0, 0, 999, 1));
+
+        panelCajas.add(new JLabel("Tiempo en aire examen 2 (min):"));
+        tiempo2 = new JSpinner(new SpinnerNumberModel(0, 0, 999, 1));
         tiempo2.setEnabled(false);
-        panelCampos.add(tiempo2);
+        panelCajas.add(tiempo2);
 
-        // Agregar lógica para habilitar campos cuando se seleccionen los checkboxes
-        checkExamen1.addActionListener(e -> {
-            boolean activo = checkExamen1.isSelected();
-            spinnerCal1.setEnabled(activo);
-            campoSSN1.setEnabled(activo);
-            campoNombreTec1.setEnabled(activo);
-            dia1.setEnabled(activo);
-            mes1.setEnabled(activo);
-            año1.setEnabled(activo);
-            tiempo1.setEnabled(activo);
-        });
+        btnAgregar = new JButton("Agregar");
 
-        checkExamen2.addActionListener(e -> {
-            boolean activo = checkExamen2.isSelected();
-            spinnerCal2.setEnabled(activo);
-            campoSSN2.setEnabled(activo);
-            campoNombreTec2.setEnabled(activo);
-            dia2.setEnabled(activo);
-            mes2.setEnabled(activo);
-            año2.setEnabled(activo);
-            tiempo2.setEnabled(activo);
-        });
-
-        ventanaAltas.add(panelCampos, BorderLayout.CENTER);
+        ventanaAltas.add(panelCajas, BorderLayout.CENTER);
         ventanaAltas.pack();
     }
 
@@ -152,6 +161,33 @@ public class AltasAviones {
 
     public JInternalFrame getVentana() {
         return ventanaAltas;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object componente = e.getSource();
+
+        if(componente == checkExamen1){
+            boolean activo = checkExamen1.isSelected();
+            spinnerCal1.setEnabled(activo);
+            campoNSS1.setEnabled(activo);
+            campoNombreTec1.setEnabled(activo);
+            dia1.setEnabled(activo);
+            mes1.setEnabled(activo);
+            año1.setEnabled(activo);
+            tiempo1.setEnabled(activo);
+        }
+
+        if(componente == checkExamen2){
+            boolean activo = checkExamen2.isSelected();
+            spinnerCal2.setEnabled(activo);
+            campoNSS2.setEnabled(activo);
+            campoNombreTec2.setEnabled(activo);
+            dia2.setEnabled(activo);
+            mes2.setEnabled(activo);
+            año2.setEnabled(activo);
+            tiempo2.setEnabled(activo);
+        }
     }
 }
 

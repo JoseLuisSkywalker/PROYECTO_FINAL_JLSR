@@ -242,6 +242,10 @@ public class VentanaInicio extends JFrame implements ActionListener {
                     agregarVentanaSingelton(ventana);
 
         }
+        if (componente == btnAgregar){
+            JInternalFrame ventana = AltasAviones.getInstancia().getVentana();
+            agregarVentanaSingelton(ventana);
+        }
 
         if (componente == btnToolbarSalir) {
             System.exit(0);
