@@ -14,12 +14,12 @@ public class AltasAviones implements ActionListener {
     JTextField cajaRegistro, cajaModelo, cajaPeso, campoNSS1, campoNSS2,campoNombreTec1, campoNombreTec2;
     JComboBox dia1, mes1, año1, dia2, mes2, año2;
     JSpinner spinnerCal1, spinnerCal2, tiempo1, tiempo2;
-    JButton btnAgregar, btnCancelar, btnRestablecer;
+    JButton btnAgregar, btnRestablecer;
     JCheckBox checkExamen1, checkExamen2;
 
 
     public AltasAviones(){
-        this.desktopPaneAltas = new JDesktopPane();
+        desktopPaneAltas = new JDesktopPane();
         ventanaAltas = new JInternalFrame();
         ventanaAltas.setSize(500, 700);
         ventanaAltas.setClosable(true);
@@ -28,7 +28,7 @@ public class AltasAviones implements ActionListener {
         ventanaAltas.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         ventanaAltas.getContentPane().setLayout(new GridLayout());
 
-        GridLayout layout = new GridLayout(17, 2, 5, 5);
+        GridLayout layout = new GridLayout(16, 2, 5, 5);
         panelCajas = new JPanel();
         panelCajas.setLayout(layout);
         EmptyBorder borde = new EmptyBorder(10, 10, 10, 10);
@@ -145,13 +145,52 @@ public class AltasAviones implements ActionListener {
         panelCajas.add(tiempo2);
 
         btnAgregar = new JButton("Agregar");
+        btnAgregar.setBackground(new Color(68, 140, 79));
+        panelCajas.add(btnAgregar);
+        btnAgregar.setBackground(new Color(68, 140, 79));
+        btnAgregar.setForeground(Color.WHITE);
+        btnAgregar.setFocusPainted(false);
+        btnAgregar.setBorderPainted(false);
+        btnAgregar.setOpaque(true);
+        btnAgregar.setContentAreaFilled(true);
+
+        btnAgregar.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if (model.isPressed()) {
+                btnAgregar.setBackground(new Color(50, 100, 60));
+            } else {
+                btnAgregar.setBackground(new Color(68, 140, 79));
+            }
+        });
+
+        btnRestablecer = new JButton("Restablecer");
+        btnRestablecer.setBackground(new Color(68, 140, 79));
+        panelCajas.add(btnRestablecer);
+        btnRestablecer.setBackground(new Color(68, 140, 79));
+        btnRestablecer.setForeground(Color.WHITE);
+        btnRestablecer.setFocusPainted(false);
+        btnRestablecer.setBorderPainted(false);
+        btnRestablecer.setOpaque(true);
+        btnRestablecer.setContentAreaFilled(true);
+
+        btnRestablecer.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if (model.isPressed()) {
+                btnRestablecer.setBackground(new Color(50, 100, 60));
+            } else {
+                btnRestablecer.setBackground(new Color(68, 140, 79));
+            }
+        });
 
 
 
 
         //lista de action listeners ---------
         checkExamen1.addActionListener(this);
-        checkExamen2.addActionListener(this); 
+        checkExamen2.addActionListener(this);
+        btnAgregar.addActionListener(this);
+        btnRestablecer.addActionListener(this);
+
 
         ventanaAltas.add(panelCajas, BorderLayout.CENTER);
         ventanaAltas.pack();
