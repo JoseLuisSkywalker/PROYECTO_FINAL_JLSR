@@ -1,4 +1,4 @@
-import edu.tecjerez.topicos.vista.VentanaInicio;
+import edu.tecjerez.topicos.vista.VentanaLogin;
 
 import javax.swing.*;
 
@@ -11,7 +11,7 @@ public class Main {
             @Override
             public void run() {
 
-                new VentanaInicio();
+                new VentanaLogin();
 
             }
         });
