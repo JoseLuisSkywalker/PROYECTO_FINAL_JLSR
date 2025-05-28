@@ -3,6 +3,7 @@ package edu.tecjerez.topicos.vista;
 import edu.tecjerez.topicos.vista.aviones.AltasAviones;
 import edu.tecjerez.topicos.vista.aviones.BajasAviones;
 import edu.tecjerez.topicos.vista.aviones.CambiosAviones;
+import edu.tecjerez.topicos.vista.aviones.ConsultasAviones;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -277,17 +278,18 @@ public class VentanaInicio extends JFrame implements ActionListener {
 
         }
 
-        /*
-        if (componente == itemConsultas) {
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    new VentanaConsultas();
-                }
-            });
+
+        if (componente == itemConsultasAviones) {
+            JInternalFrame ventana = ConsultasAviones.getInstancia().getVentana();
+            agregarVentanaSingelton(ventana);
+        }
+        if (componente == btnConsulta) {
+            JInternalFrame ventana = ConsultasAviones.getInstancia().getVentana();
+            agregarVentanaSingelton(ventana);
+
         }
 
- */
+
 
     }
 
