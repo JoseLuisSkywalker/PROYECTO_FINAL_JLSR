@@ -230,19 +230,6 @@ public class VentanaInicio extends JFrame implements ActionListener {
         toolbar.setVisible(true);
 
 
-        //jtable universal en el este del desktop ---------------
-        String[] columnas = {
-                "Número de registro", "Modelo de Avión", "Capacidad de Peso", "Calificación Examen 1", "NSS Técnico Ex 1", "Nombre Técnico", "Fecha", "Tiempo en el Aire 1", "Calificación Examen 2", "NSS Técnico Ex 2", "Nombre Técnico", "Fecha", "Tiempo en el Aire 2"
-        };
-        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0);
-        tabla = new JTable(modeloTabla);
-
-        JScrollPane scrollTabla = new JScrollPane(tabla);
-        scrollTabla.setPreferredSize(new Dimension(100, getHeight()));
-
-        add(scrollTabla, BorderLayout.EAST);
-
-
         //agregado del desktop pane dentro de la ventana ------------
         ventanaDesktopPane = new JDesktopPane();
         add(ventanaDesktopPane, BorderLayout.CENTER);

@@ -26,7 +26,7 @@ public class AltasAviones implements ActionListener {
         ventanaAltas.setIconifiable(true);
         ventanaAltas.setResizable(true);
         ventanaAltas.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaAltas.getContentPane().setLayout(new GridLayout());
+        ventanaAltas.getContentPane().setLayout(new BorderLayout());
 
         GridLayout layout = new GridLayout(16, 2, 5, 5);
         panelCajas = new JPanel();
@@ -182,6 +182,33 @@ public class AltasAviones implements ActionListener {
             }
         });
 
+
+        String[][] filas = new String[34][13];
+        for (int i = 0; i < filas.length; i++) {
+            for (int j = 0; j < filas[i].length; j++) {
+                filas[i][j] = "";
+            }
+        }
+
+        String[] columnas = {
+                "Número de registro", "Modelo de Avión", "Capacidad de Peso",
+                "Calificación Examen 1", "NSS Técnico Ex 1", "Nombre Técnico 1", "Fecha Ex 1", "Tiempo Aire 1",
+                "Calificación Examen 2", "NSS Técnico Ex 2", "Nombre Técnico 2", "Fecha Ex 2", "Tiempo Aire 2"
+        };
+
+        JTable tablaAviones = new JTable(filas, columnas);
+        tablaAviones.setEnabled(false);
+        tablaAviones.setFillsViewportHeight(true);
+        tablaAviones.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        tablaAviones.setGridColor(Color.BLACK);
+        tablaAviones.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        JScrollPane scrollTabla = new JScrollPane(tablaAviones);
+        scrollTabla.setPreferredSize(new Dimension(480, 150));
+
+        ventanaAltas.add(panelCajas, BorderLayout.CENTER);
+        ventanaAltas.add(scrollTabla, BorderLayout.SOUTH);
+        ventanaAltas.pack();
 
 
 
