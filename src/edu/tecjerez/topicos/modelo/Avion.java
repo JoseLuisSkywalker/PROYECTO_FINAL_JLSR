@@ -39,6 +39,10 @@ public class Avion {
         this.tiempoAire2 = tiempoAire2;
     }
 
+    public Avion() {
+
+    }
+
     public String getNumeroRegistro() {
         return numeroRegistro;
     }
