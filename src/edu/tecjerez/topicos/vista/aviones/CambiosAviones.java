@@ -147,7 +147,7 @@ public class CambiosAviones implements ActionListener {
 
         btnBuscar = new JButton("Buscar");
         btnBuscar.setBackground(new Color(140, 134, 68));
-        btnBuscar.add(btnBuscar);
+        panelCajas.add(btnBuscar);
         btnBuscar.setBackground(new Color(140, 139, 68));
         btnBuscar.setForeground(Color.WHITE);
         btnBuscar.setFocusPainted(false);
@@ -219,7 +219,7 @@ public class CambiosAviones implements ActionListener {
 
         ventanaModificaciones.add(panelCajas, BorderLayout.CENTER);
         ventanaModificaciones.add(scrollTabla, BorderLayout.SOUTH);
-        ventanaModificaciones.pack();
+
 
 
 
@@ -229,8 +229,6 @@ public class CambiosAviones implements ActionListener {
         btnModificar.addActionListener(this);
         btnRestablecer.addActionListener(this);
 
-
-        ventanaModificaciones.add(panelCajas, BorderLayout.CENTER);
         ventanaModificaciones.pack();
     }
 
