@@ -3,6 +3,7 @@ package edu.tecjerez.topicos.vista;
 import edu.tecjerez.topicos.vista.aviones.AltasAviones;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +25,8 @@ public class VentanaInicio extends JFrame implements ActionListener {
     JToolBar toolbar;
 
     JButton btnToolbarSalir, btnConsulta, btnAgregar, btnModificar, btnBorrar;
+
+    JTable tabla;
 
     public VentanaInicio() {
         setLayout(new BorderLayout());
@@ -130,7 +133,7 @@ public class VentanaInicio extends JFrame implements ActionListener {
         toolbar.setBackground(new Color(7, 41, 50));
         toolbar.add(logo);
 
-        //btn consulta (jframe predeterminado) -------------
+        //btn consulta  -------------
         ImageIcon iconoConsulta = new ImageIcon("./imagenes/consultas.png");
         Image imagenConsulta = iconoConsulta.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon iconoConsultaEscalado = new ImageIcon(imagenConsulta);
@@ -225,6 +228,19 @@ public class VentanaInicio extends JFrame implements ActionListener {
         toolbar.add(Box.createVerticalGlue());
         add(toolbar, BorderLayout.WEST);
         toolbar.setVisible(true);
+
+
+        //jtable universal en el este del desktop ---------------
+        String[] columnas = {
+                "Número de registro", "Modelo de Avión", "Capacidad de Peso", "Calificación Examen 1", "NSS Técnico Ex 1", "Nombre Técnico", "Fecha", "Tiempo en el Aire 1", "Calificación Examen 2", "NSS Técnico Ex 2", "Nombre Técnico", "Fecha", "Tiempo en el Aire 2"
+        };
+        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0);
+        tabla = new JTable(modeloTabla);
+
+        JScrollPane scrollTabla = new JScrollPane(tabla);
+        scrollTabla.setPreferredSize(new Dimension(100, getHeight()));
+
+        add(scrollTabla, BorderLayout.EAST);
 
 
         //agregado del desktop pane dentro de la ventana ------------
