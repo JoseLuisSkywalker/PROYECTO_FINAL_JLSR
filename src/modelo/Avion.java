@@ -1,8 +1,7 @@
-package edu.tecjerez.topicos.modelo;
+package modelo;
 
 public class Avion {
-
-    private String numeroRegistro;
+    private int numeroRegistro;
     private String modeloAvion;
     private int capacidadPeso;
 
@@ -18,7 +17,11 @@ public class Avion {
     private String fechaExamen2;
     private int tiempoAire2;
 
-    public Avion(String numeroRegistro, String modeloAvion, int capacidadPeso,
+    public Avion(){
+
+    }
+
+    public Avion(int numeroRegistro, String modeloAvion, int capacidadPeso,
                  int calificacionExamen1, String nssTecnico1, String nombreTecnico1, String fechaExamen1, int tiempoAire1,
                  int calificacionExamen2, String nssTecnico2, String nombreTecnico2, String fechaExamen2, int tiempoAire2) {
 
@@ -39,15 +42,12 @@ public class Avion {
         this.tiempoAire2 = tiempoAire2;
     }
 
-    public Avion() {
 
-    }
-
-    public String getNumeroRegistro() {
+    public int getNumeroRegistro() {
         return numeroRegistro;
     }
 
-    public void setNumeroRegistro(String numeroRegistro) {
+    public void setNumeroRegistro(int numeroRegistro) {
         this.numeroRegistro = numeroRegistro;
     }
 
@@ -150,7 +150,7 @@ public class Avion {
     @Override
     public String toString() {
         return "Avion{" +
-                "numeroRegistro='" + numeroRegistro + '\'' +
+                "numeroRegistro=" + numeroRegistro +
                 ", modeloAvion='" + modeloAvion + '\'' +
                 ", capacidadPeso=" + capacidadPeso +
                 ", calificacionExamen1=" + calificacionExamen1 +
@@ -165,4 +165,8 @@ public class Avion {
                 ", tiempoAire2=" + tiempoAire2 +
                 '}';
     }
+
+
+
+
 }

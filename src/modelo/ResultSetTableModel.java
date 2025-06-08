@@ -1,8 +1,7 @@
-package edu.tecjerez.topicos.modelo;
+package modelo;
 
+import javax.swing.table.AbstractTableModel;
 import java.sql.*;
-import java.util.*;
-import javax.swing.table.*;
 
 // Las filas y columnas del objeto ResultSet se cuentan desde 1 y las filas
 // y columnas del objeto JTable se cuentan desde 0. Al procesar filas
@@ -41,6 +40,16 @@ public class ResultSetTableModel extends AbstractTableModel {
         // establecer consulta y ejecutarla
         establecerConsulta( consulta );
     }
+
+
+    public ResultSetTableModel(String controlador, String url, String consulta, Object... params)
+            throws SQLException, ClassNotFoundException {
+        Class.forName(controlador);
+        conexion = DriverManager.getConnection(url,"root","boomboomjoseluis777$");
+        conectadoALaBaseDeDatos = true;
+        establecerConsultaConParametros(consulta, params);
+    }
+
 
     // obtener la clase que representa al tipo de columna
     public Class getColumnClass( int columna ) throws IllegalStateException
@@ -164,6 +173,39 @@ public class ResultSetTableModel extends AbstractTableModel {
         fireTableStructureChanged();
     }
 
+    public void establecerConsultaConParametros(String consulta, Object... params)
+            throws SQLException, IllegalStateException {
+        if (!conectadoALaBaseDeDatos)
+            throw new IllegalStateException("No hay conexión a la base de datos");
+
+        if (conjuntoResultados != null) {
+            conjuntoResultados.close();
+        }
+        if (instruccion != null) {
+            instruccion.close();
+        }
+
+        PreparedStatement ps = conexion.prepareStatement(consulta,
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY);
+
+        for (int i = 0; i < params.length; i++) {
+            ps.setObject(i + 1, params[i]);
+        }
+
+        conjuntoResultados = ps.executeQuery();
+        metaDatos = conjuntoResultados.getMetaData();
+
+        conjuntoResultados.last();
+        numeroDeFilas = conjuntoResultados.getRow();
+        conjuntoResultados.beforeFirst();
+
+        fireTableStructureChanged();
+
+        instruccion = ps;
+    }
+
+
     // cerrar objetos Statement y Connection
     public void desconectarDeLaBaseDeDatos()
     {
@@ -189,7 +231,7 @@ public class ResultSetTableModel extends AbstractTableModel {
 
 
 
-/**************************
+/**************************************************************************
  * (C) Copyright 1992-2003 by Deitel & Associates, Inc. and               *
  * Prentice Hall. All Rights Reserved.                                    *
  *                                                                        *
@@ -202,4 +244,4 @@ public class ResultSetTableModel extends AbstractTableModel {
  * and publisher shall not be liable in any event for incidental or       *
  * consequential damages in connection with, or arising out of, the       *
  * furnishing, performance, or use of these programs.                     *
- *************************/
+ *************************************************************************/

@@ -1,4 +1,4 @@
-package edu.tecjerez.topicos.vista;
+package vista;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,7 +39,7 @@ public class VentanaLogin extends JFrame {
                 String usuario = campoUsuario.getText();
                 String password = campoPassword.getText();
 
-                if(usuario.equals("joseluis") && password.equals("boomboom")) {
+                if(usuario.equals("joseluis") && password.equals("boom")) {
                     dispose();
                     new VentanaInicio();
                 } else {

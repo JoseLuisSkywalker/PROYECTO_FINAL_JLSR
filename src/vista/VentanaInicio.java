@@ -1,50 +1,51 @@
-package edu.tecjerez.topicos.vista;
-
-import edu.tecjerez.topicos.vista.aviones.AltasAviones;
-import edu.tecjerez.topicos.vista.aviones.BajasAviones;
-import edu.tecjerez.topicos.vista.aviones.CambiosAviones;
-import edu.tecjerez.topicos.vista.aviones.ConsultasAviones;
+package vista;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+
 public class VentanaInicio extends JFrame implements ActionListener {
-    private JDesktopPane ventanaDesktopPane;
+    JDesktopPane desktopPane;
 
-    JMenu menuEmpleados, menuAviones;
-    //-------------- ITEMS EMPLEADOS ---------------
-    JMenu menuTraficadores, menuTecnicos;
-
-    //-------------- ITEMS DE LOS ITEMS EMPLEADOS ---------------------
+    JMenuItem itemAltasAviones, itemBajasAviones, itemModificacionesAviones, itemConsultasAviones;
     JMenuItem itemAltasTecnicos, itemBajasTecnicos, itemModificacionesTecnicos, itemConsultasTecnicos;
     JMenuItem itemAltasTraficadores, itemBajasTraficadores, itemModificacionesTraficadores, itemConsultasTraficadores;
-    JMenuItem itemAltasAviones, itemBajasAviones, itemModificacionesAviones, itemConsultasAviones;
-    //--------------------
+
+
+    JMenu menuEmpleados, menuAviones;
+    JMenu menuTraficadores, menuTecnicos;
+
 
     JToolBar toolbar;
-
     JButton btnToolbarSalir, btnConsulta, btnAgregar, btnModificar, btnBorrar;
 
-    JTable tabla;
+    AltasAviones IF_Altas = new AltasAviones();
+    BajasAviones IF_Bajas = new BajasAviones();
+    ConsultasAviones IF_Consultas = new ConsultasAviones();
+    CambiosAviones IF_Cambios = new CambiosAviones();
 
-    public VentanaInicio() {
+
+    public VentanaInicio(){
         setLayout(new BorderLayout());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Dane County Airport");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
-        getContentPane().setBackground(new Color(31, 70, 96));
-        setVisible(true);
+
+        desktopPane = new JDesktopPane();
+        desktopPane.setBackground(new Color(31, 70, 96));
+        add(desktopPane, BorderLayout.CENTER);
+
+
 
         JMenuBar menuBar = new JMenuBar();
         menuBar.setBackground(new Color(7, 41, 50));
         menuBar.setOpaque(true);
 
-//----------------------- MENU AVIONES-------------------–––––––---––––––––--------
+ // ----------------–––––––––––––––––––––––––––––––––––––––- menu aviones principio
         menuAviones = new JMenu("Aviones");
         menuAviones.setMnemonic(KeyEvent.VK_W);
 
@@ -73,9 +74,9 @@ public class VentanaInicio extends JFrame implements ActionListener {
         itemConsultasAviones.addActionListener(this);
 
         menuBar.add(menuAviones);
+//------------------------------------------------------------- menu aviones fin
 
-
-//----------------------- MENU EMPLEADOS ----------------------------
+//-------------------------------------------------- menu empleados principio
         menuEmpleados = new JMenu("Empleados");
 
         menuTecnicos = new JMenu("Técnicos");
@@ -83,19 +84,16 @@ public class VentanaInicio extends JFrame implements ActionListener {
 
         itemAltasTecnicos = new JMenuItem("Agregar");
         menuTecnicos.add(itemAltasTecnicos);
-        itemAltasTecnicos.addActionListener(this);
 
         itemBajasTecnicos = new JMenuItem("Eliminar");
         menuTecnicos.add(itemBajasTecnicos);
-        itemBajasTecnicos.addActionListener(this);
 
         itemModificacionesTecnicos = new JMenuItem("Modificar");
         menuTecnicos.add(itemModificacionesTecnicos);
-        itemModificacionesTecnicos.addActionListener(this);
 
         itemConsultasTecnicos = new JMenuItem("Buscar");
         menuTecnicos.add(itemConsultasTecnicos);
-        itemConsultasTecnicos.addActionListener(this);
+
 
         menuEmpleados.add(menuTecnicos);
 
@@ -103,29 +101,25 @@ public class VentanaInicio extends JFrame implements ActionListener {
 
         itemAltasTraficadores = new JMenuItem("Agregar");
         menuTraficadores.add(itemAltasTraficadores);
-        itemAltasTraficadores.addActionListener(this);
 
         itemBajasTraficadores = new JMenuItem("Eliminar");
         menuTraficadores.add(itemBajasTraficadores);
-        itemBajasTraficadores.addActionListener(this);
 
         itemModificacionesTraficadores = new JMenuItem("Modificar");
         menuTraficadores.add(itemModificacionesTraficadores);
-        itemModificacionesTraficadores.addActionListener(this);
 
         itemConsultasTraficadores = new JMenuItem("Buscar");
         menuTraficadores.add(itemConsultasTraficadores);
-        itemConsultasTraficadores.addActionListener(this);
 
         menuEmpleados.add(menuTraficadores);
 
         menuBar.add(menuEmpleados);
-
+//--------------------–––––––––––––––––menu empleados fin
 
         setJMenuBar(menuBar);
 
-        // toolbar -----------------
 
+//------------------------------ tool bar principio
         toolbar = new JToolBar(JToolBar.VERTICAL);
 
         JLabel logo = new JLabel();
@@ -229,87 +223,99 @@ public class VentanaInicio extends JFrame implements ActionListener {
         toolbar.setFloatable(false);
         toolbar.setLayout(new BoxLayout(toolbar, BoxLayout.Y_AXIS));
         toolbar.add(Box.createVerticalGlue());
-        add(toolbar, BorderLayout.WEST);
         toolbar.setVisible(true);
+//------------------------------------- tool bar fin
 
+        getContentPane().add(toolbar, BorderLayout.WEST);
+        getContentPane().add(desktopPane, BorderLayout.CENTER);
 
-        //agregado del desktop pane dentro de la ventana ------------
-        ventanaDesktopPane = new JDesktopPane();
-        add(ventanaDesktopPane, BorderLayout.CENTER);
+        //para que aparesca bien bonito
+        desktopPane.add(IF_Altas);
+        IF_Altas.toFront();
+
+        //para que aparesca
+        desktopPane.add(IF_Bajas);
+        IF_Bajas.toFront();
+
+        //para que aparesca consultas
+        desktopPane.add(IF_Consultas);
+        IF_Consultas.toFront();
+
+        //para que aparesca modificaciones
+        desktopPane.add(IF_Cambios);
+        IF_Cambios.toFront();
+
+        setVisible(true);
     }
+
+
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Object componente = e.getSource();
 
-
-        if (componente == itemAltasAviones) {
-                    JInternalFrame ventana = AltasAviones.getInstancia().getVentana();
-                    agregarVentanaSingelton(ventana);
-
-        }
-        if (componente == btnAgregar){
-            JInternalFrame ventana = AltasAviones.getInstancia().getVentana();
-            agregarVentanaSingelton(ventana);
-        }
-
-        if (componente == btnToolbarSalir) {
-            System.exit(0);
-        }
-
-        if (componente == itemBajasAviones) {
-            JInternalFrame ventana = BajasAviones.getInstancia().getVentana();
-            agregarVentanaSingelton(ventana);
-        }
-        if (componente == btnBorrar){
-            JInternalFrame ventana = BajasAviones.getInstancia().getVentana();
-            agregarVentanaSingelton(ventana);
-        }
+        IF_Altas.setVisible(false);
+        IF_Bajas.setVisible(false);
+        IF_Cambios.setVisible(false);
+        IF_Consultas.setVisible(false);
 
 
+        // si se presiona boton o item de menu agregar
+        if(componente == itemAltasAviones || componente == btnAgregar){
+            //asegurate que pongas los demas metodos para actualizar tabla.
 
-        if (componente == itemModificacionesAviones) {
-            JInternalFrame ventana = CambiosAviones.getInstancia().getVentana();
-            agregarVentanaSingelton(ventana);
-        }
-        if (componente == btnModificar) {
-            JInternalFrame ventana = CambiosAviones.getInstancia().getVentana();
-            agregarVentanaSingelton(ventana);
-
-        }
-
-
-        if (componente == itemConsultasAviones) {
-            JInternalFrame ventana = ConsultasAviones.getInstancia().getVentana();
-            agregarVentanaSingelton(ventana);
-        }
-        if (componente == btnConsulta) {
-            JInternalFrame ventana = ConsultasAviones.getInstancia().getVentana();
-            agregarVentanaSingelton(ventana);
-
-        }
-
-
-
-    }
-
-    private void agregarVentanaSingelton(JInternalFrame ventana) {
-        if (ventana == null) {
-            JOptionPane.showMessageDialog(this, "La ventana no está inicializada.");
-            return;
-        }
-
-        if (!ventana.isVisible()) {
-            ventanaDesktopPane.add(ventana);
-            ventana.setVisible(true);
-            ventana.toFront();
-        } else {
-            try {
-                ventana.setSelected(true);
-            } catch (Exception e) {
-                e.printStackTrace();
+            //visibilidad en el desktop pane
+            if (!IF_Altas.isVisible()) {
+                IF_Altas.setVisible(true);
+                IF_Altas.toFront();
             }
+
         }
+        // si se presiona boton o itme de menu borrar
+        if(componente == itemBajasAviones || componente == btnBorrar){
+            //jose luis del futuro: agrega validación aqui.
+
+            //visibilidad en el desk...
+            if (!IF_Bajas.isVisible()) {
+                IF_Bajas.setVisible(true);
+                IF_Bajas.toFront();
+
+            }
+
+        }
+
+
+        // si se presiona boton o item de menu consultar
+        if(componente == itemConsultasAviones || componente == btnConsulta){
+
+            if (!IF_Consultas.isVisible()) {
+                IF_Consultas.setVisible(true);
+                IF_Consultas.toFront();
+
+            }
+
+        }
+
+        // si se presiona boton o item de menu modificar
+        if(componente == itemModificacionesAviones || componente == btnModificar){
+            if(!IF_Cambios.isVisible()){
+                IF_Cambios.setVisible(true);
+                IF_Consultas.toFront();
+            }
+
+
+
+        }
+
+        if(componente == btnToolbarSalir){
+            System.exit(0);
+
+        }
+
+
+
+
     }
 }
 

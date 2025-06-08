@@ -1,28 +1,29 @@
-package edu.tecjerez.topicos.vista.aviones;
+package vista;
+
+import controlador.AvionDAO;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-public class BajasAviones implements ActionListener {
-    public static BajasAviones instancia;
-    JInternalFrame ventanaBajas;
-    JDesktopPane desktopPaneBajas;
+public class BajasAviones extends JInternalFrame implements ActionListener {
     JPanel panelCajas;
     JTextField cajaRegistro, cajaModelo;
-    JButton btnBuscar, btnBorrar, btnRestablecer;
+    JButton btnBuscar, btnBorrarContenido, btnRestablecer;
+    JTable tablaAviones;
 
-    public BajasAviones() {
-        desktopPaneBajas = new JDesktopPane();
-        ventanaBajas = new JInternalFrame();
-        ventanaBajas.setSize(1000, 400);
-        ventanaBajas.setClosable(true);
-        ventanaBajas.setIconifiable(true);
-        ventanaBajas.setResizable(true);
-        ventanaBajas.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaBajas.getContentPane().setLayout(new BorderLayout());
+
+    public BajasAviones(){
+        this.setSize(1000, 400);
+        this.setClosable(true);
+        this.setIconifiable(true);
+        this.setResizable(true);
+        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        this.getContentPane().setLayout(new BorderLayout());
 
         GridLayout layout = new GridLayout(4, 2, 5, 5);
         panelCajas = new JPanel();
@@ -32,13 +33,28 @@ public class BajasAviones implements ActionListener {
         Color colorFondo = new Color(213, 181, 181);
         panelCajas.setBackground(colorFondo);
 
+        // Etiqueta y campo para número de registro
         panelCajas.add(new JLabel("Número de registro:"));
         cajaRegistro = new JTextField();
+
+        // KeyListener: solo acepta números
+        cajaRegistro.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) && c != '\b') {
+                    e.consume(); // Bloquea letras y símbolos
+                    Toolkit.getDefaultToolkit().beep(); // Beep opcional
+                }
+            }
+        });
+
+
         panelCajas.add(cajaRegistro);
 
-        panelCajas.add(new JLabel("Modelo de avión:"));
+        //panelCajas.add(new JLabel("Modelo de avión:"));
         cajaModelo = new JTextField();
-        panelCajas.add(cajaModelo);
+       // panelCajas.add(cajaModelo);
 
         btnBuscar = new JButton("Buscar");
         btnBuscar.setBackground(new Color(140, 68, 68));
@@ -47,7 +63,6 @@ public class BajasAviones implements ActionListener {
         btnBuscar.setBorderPainted(false);
         btnBuscar.setOpaque(true);
         btnBuscar.setContentAreaFilled(true);
-        panelCajas.add(btnBuscar);
 
         btnBuscar.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
@@ -57,33 +72,38 @@ public class BajasAviones implements ActionListener {
                 btnBuscar.setBackground(new Color(140, 68, 68));
             }
         });
+       // panelCajas.add(btnBuscar);
 
-        btnBorrar = new JButton("Borrar");
-        btnBorrar.setBackground(new Color(140, 68, 68));
-        btnBorrar.setForeground(Color.WHITE);
-        btnBorrar.setFocusPainted(false);
-        btnBorrar.setBorderPainted(false);
-        btnBorrar.setOpaque(true);
-        btnBorrar.setContentAreaFilled(true);
-        panelCajas.add(btnBorrar);
 
-        btnBorrar.getModel().addChangeListener(e -> {
+        btnBorrarContenido = new JButton("Borrar");
+        btnBorrarContenido.setBackground(new Color(140, 68, 68));
+        btnBorrarContenido.setForeground(Color.WHITE);
+        btnBorrarContenido.setFocusPainted(false);
+        btnBorrarContenido.setBorderPainted(false);
+        btnBorrarContenido.setOpaque(true);
+        btnBorrarContenido.setContentAreaFilled(true);
+
+
+
+        btnBorrarContenido.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if (model.isPressed()) {
-                btnBorrar.setBackground(new Color(100, 50, 50));
+                btnBorrarContenido.setBackground(new Color(100, 50, 50));
             } else {
-                btnBorrar.setBackground(new Color(140, 68, 68));
+                btnBorrarContenido.setBackground(new Color(140, 68, 68));
             }
         });
 
+        panelCajas.add(btnBorrarContenido);
+
+
         btnRestablecer = new JButton("Restablecer");
-        btnRestablecer.setBackground(new Color(140, 68, 68, 255));
+        btnRestablecer.setBackground(new Color(140, 68, 68));
         btnRestablecer.setForeground(Color.WHITE);
         btnRestablecer.setFocusPainted(false);
         btnRestablecer.setBorderPainted(false);
         btnRestablecer.setOpaque(true);
         btnRestablecer.setContentAreaFilled(true);
-        panelCajas.add(btnRestablecer);
 
         btnRestablecer.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
@@ -93,6 +113,8 @@ public class BajasAviones implements ActionListener {
                 btnRestablecer.setBackground(new Color(140, 68, 68));
             }
         });
+
+        panelCajas.add(btnRestablecer);
 
         String[][] filas = new String[34][13];
         for (int i = 0; i < filas.length; i++) {
@@ -107,51 +129,42 @@ public class BajasAviones implements ActionListener {
                 "Calificación Examen 2", "NSS Técnico Ex 2", "Nombre Técnico 2", "Fecha Ex 2", "Tiempo Aire 2"
         };
 
-        JTable tablaAviones = new JTable(filas, columnas);
-        tablaAviones.setEnabled(false);
-        tablaAviones.setFillsViewportHeight(true);
-        tablaAviones.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        tablaAviones.setGridColor(Color.BLACK);
-        tablaAviones.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        //tablaAviones = new JTable(filas, columnas);
+       // tablaAviones.setEnabled(false);
+
 
         JScrollPane scrollTabla = new JScrollPane(tablaAviones);
         scrollTabla.setPreferredSize(new Dimension(480, 150));
 
-        ventanaBajas.add(panelCajas, BorderLayout.CENTER);
-        ventanaBajas.add(scrollTabla, BorderLayout.SOUTH);
+        this.add(panelCajas, BorderLayout.CENTER);
 
 
         btnBuscar.addActionListener(this);
-        btnBorrar.addActionListener(this);
+        btnBorrarContenido.addActionListener(this);
         btnRestablecer.addActionListener(this);
+
+
     }
 
-    public static BajasAviones getInstancia() {
-        if (instancia == null) {
-            instancia = new BajasAviones();
-        }
-        return instancia;
+    public void restablecer(){
+        cajaRegistro.setText("");
+        cajaModelo.setText("");
     }
 
-    public JInternalFrame getVentana() {
-        return ventanaBajas;
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Object componente = e.getSource();
+        if(e.getSource() == btnBorrarContenido){
+            AvionDAO dao = new AvionDAO();
+            int numRegistro = Integer.parseInt(cajaRegistro.getText());
 
-        if (componente == btnRestablecer) {
-            cajaRegistro.setText("");
-            cajaModelo.setText("");
+            dao.eliminarAvion(numRegistro);
+            JOptionPane.showMessageDialog(this, "Datos borrados correctamente");
+
         }
 
-        if (componente == btnBuscar) {
-            JOptionPane.showMessageDialog(null, "Buscar función no implementada todavía.");
-        }
-
-        if (componente == btnBorrar) {
-            JOptionPane.showMessageDialog(null, "Borrar función no implementada todavía.");
+        if (e.getSource() == btnRestablecer) {
+            restablecer();
         }
     }
 }
